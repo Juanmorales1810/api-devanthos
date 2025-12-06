@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from "path";
 import { apiReference } from "@scalar/express-api-reference";
 
 import routes from "./routes";
@@ -9,6 +10,9 @@ import errorHandler from "./middlewares/errorHandler";
 import { openApiSpec } from "./openapi";
 
 const app: Application = express();
+
+// Servir archivos estáticos (favicon)
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Middlewares de seguridad y utilidades
 app.use(
@@ -26,6 +30,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rutas principales
 app.use("/api", routes);
+
+// Favicon explícito
+app.get("/favicon.ico", (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, "..", "public", "favicon.svg"));
+});
 
 // Documentación de API con Scalar
 app.get("/openapi.json", (_req: Request, res: Response) => {

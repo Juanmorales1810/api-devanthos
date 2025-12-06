@@ -1,15 +1,22 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import { apiReference } from "@scalar/express-api-reference";
 
 import routes from "./routes";
 import errorHandler from "./middlewares/errorHandler";
+import { openApiSpec } from "./openapi";
 
 const app: Application = express();
 
 // Middlewares de seguridad y utilidades
-app.use(helmet());
+app.use(
+    helmet({
+        contentSecurityPolicy: false, // Deshabilitar CSP para Scalar
+        crossOriginEmbedderPolicy: false,
+    })
+);
 app.use(cors());
 app.use(morgan("dev"));
 
@@ -20,8 +27,23 @@ app.use(express.urlencoded({ extended: true }));
 // Rutas principales
 app.use("/api", routes);
 
+// Documentación de API con Scalar
+app.get("/openapi.json", (_req: Request, res: Response) => {
+    res.json(openApiSpec);
+});
+
+app.use(
+    "/docs",
+    apiReference({
+        theme: "purple",
+        spec: {
+            content: openApiSpec,
+        },
+    })
+);
+
 // Ruta de health check
-app.get("/health", (req: Request, res: Response) => {
+app.get("/health", (_req: Request, res: Response) => {
     res.status(200).json({
         status: "OK",
         timestamp: new Date().toISOString(),
@@ -29,7 +51,7 @@ app.get("/health", (req: Request, res: Response) => {
 });
 
 // Manejo de rutas no encontradas
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((_req: Request, res: Response) => {
     res.status(404).json({
         success: false,
         message: "Ruta no encontrada",

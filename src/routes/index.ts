@@ -1,12 +1,13 @@
-const express = require("express");
-const router = express.Router();
+import express, { Request, Response, Router } from "express";
+
+const router: Router = express.Router();
 
 // Importar rutas específicas
-// const userRoutes = require('./user.routes');
-// const authRoutes = require('./auth.routes');
+// import userRoutes from './user.routes';
+// import authRoutes from './auth.routes';
 
 // Ruta de bienvenida
-router.get("/", (req, res) => {
+router.get("/", (req: Request, res: Response) => {
     res.json({
         success: true,
         message: "Bienvenido a la API de Devanthos",
@@ -18,4 +19,4 @@ router.get("/", (req, res) => {
 // router.use('/users', userRoutes);
 // router.use('/auth', authRoutes);
 
-module.exports = router;
+export default router;

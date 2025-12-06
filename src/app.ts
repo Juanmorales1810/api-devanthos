@@ -1,12 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
+import express, { Application, Request, Response, NextFunction } from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
 
-const routes = require("./routes");
-const errorHandler = require("./middlewares/errorHandler");
+import routes from "./routes";
+import errorHandler from "./middlewares/errorHandler";
 
-const app = express();
+const app: Application = express();
 
 // Middlewares de seguridad y utilidades
 app.use(helmet());
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 
 // Ruta de health check
-app.get("/health", (req, res) => {
+app.get("/health", (req: Request, res: Response) => {
     res.status(200).json({
         status: "OK",
         timestamp: new Date().toISOString(),
@@ -29,7 +29,7 @@ app.get("/health", (req, res) => {
 });
 
 // Manejo de rutas no encontradas
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(404).json({
         success: false,
         message: "Ruta no encontrada",
@@ -39,4 +39,4 @@ app.use((req, res, next) => {
 // Middleware de manejo de errores
 app.use(errorHandler);
 
-module.exports = app;
+export default app;

@@ -1,15 +1,36 @@
 /**
  * Configuración centralizada de la aplicación
  */
-const config = {
+
+interface DatabaseConfig {
+    host: string;
+    port: number;
+    name: string;
+    user: string;
+    password: string;
+}
+
+interface JWTConfig {
+    secret: string;
+    expiresIn: string;
+}
+
+interface Config {
+    port: number;
+    nodeEnv: string;
+    db: DatabaseConfig;
+    jwt: JWTConfig;
+}
+
+const config: Config = {
     // Servidor
-    port: process.env.PORT || 3000,
+    port: parseInt(process.env.PORT || "3000", 10),
     nodeEnv: process.env.NODE_ENV || "development",
 
     // Base de datos
     db: {
         host: process.env.DB_HOST || "localhost",
-        port: process.env.DB_PORT || 5432,
+        port: parseInt(process.env.DB_PORT || "5432", 10),
         name: process.env.DB_NAME || "devanthos",
         user: process.env.DB_USER || "postgres",
         password: process.env.DB_PASSWORD || "",
@@ -22,4 +43,4 @@ const config = {
     },
 };
 
-module.exports = config;
+export default config;

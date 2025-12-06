@@ -1,6 +1,6 @@
 # API Devanthos
 
-API Backend desarrollada con Node.js y Express.
+API Backend desarrollada con Node.js, Express y TypeScript.
 
 ## 📁 Estructura del Proyecto
 
@@ -13,12 +13,15 @@ api-devanthos/
 │   ├── models/          # Modelos de datos
 │   ├── routes/          # Definición de rutas
 │   ├── services/        # Lógica de negocio
+│   ├── types/           # Tipos y definiciones TypeScript
 │   ├── utils/           # Utilidades y helpers
-│   ├── app.js           # Configuración de Express
-│   └── index.js         # Punto de entrada
+│   ├── app.ts           # Configuración de Express
+│   └── index.ts         # Punto de entrada
+├── dist/                # Código compilado (generado)
 ├── .env                 # Variables de entorno (no commitear)
 ├── .env.example         # Ejemplo de variables de entorno
 ├── .gitignore
+├── tsconfig.json        # Configuración de TypeScript
 ├── package.json
 └── README.md
 ```
@@ -28,7 +31,7 @@ api-devanthos/
 1. Clonar el repositorio
 2. Instalar dependencias:
     ```bash
-    npm install
+    pnpm install
     ```
 3. Configurar variables de entorno:
     ```bash
@@ -36,14 +39,15 @@ api-devanthos/
     ```
 4. Ejecutar en desarrollo:
     ```bash
-    npm run dev
+    pnpm dev
     ```
 
 ## 📜 Scripts Disponibles
 
--   `npm start` - Inicia el servidor en producción
--   `npm run dev` - Inicia el servidor en desarrollo con hot reload
--   `npm test` - Ejecuta los tests
+-   `pnpm start` - Inicia el servidor en producción (código compilado)
+-   `pnpm dev` - Inicia el servidor en desarrollo con hot reload usando tsx
+-   `pnpm build` - Compila el código TypeScript a JavaScript
+-   `pnpm test` - Ejecuta los tests
 
 ## 🔗 Endpoints Base
 
@@ -52,8 +56,39 @@ api-devanthos/
 
 ## 🛠️ Tecnologías
 
+-   **TypeScript** - Superset de JavaScript con tipos estáticos
 -   **Express** - Framework web
 -   **Helmet** - Seguridad HTTP headers
 -   **CORS** - Cross-Origin Resource Sharing
 -   **Morgan** - Logger de peticiones HTTP
 -   **Dotenv** - Gestión de variables de entorno
+-   **tsx** - Ejecutor de TypeScript para desarrollo
+
+## 📝 TypeScript
+
+Este proyecto utiliza TypeScript de forma nativa con configuración estricta. Los archivos TypeScript se encuentran en la carpeta `src/` y se compilan a JavaScript en la carpeta `dist/`.
+
+### Características TypeScript:
+
+-   Tipos estrictos habilitados
+-   Interfaces para configuración y respuestas API
+-   Tipos personalizados para Express en `src/types/`
+-   Source maps para debugging
+-   Compilación incremental
+
+### Desarrollo:
+
+Para desarrollo, usamos `tsx` que permite ejecutar TypeScript directamente sin necesidad de compilar:
+
+```bash
+pnpm dev
+```
+
+### Producción:
+
+Para producción, primero compila el código:
+
+```bash
+pnpm build
+pnpm start
+```

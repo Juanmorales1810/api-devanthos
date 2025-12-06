@@ -53,6 +53,8 @@ api-devanthos/
 
 -   `GET /health` - Health check del servidor
 -   `GET /api` - Información de la API
+-   `GET /docs` - Documentación interactiva de la API (Scalar)
+-   `GET /openapi.json` - Especificación OpenAPI en formato JSON
 
 ## 🛠️ Tecnologías
 
@@ -63,6 +65,7 @@ api-devanthos/
 -   **Morgan** - Logger de peticiones HTTP
 -   **Dotenv** - Gestión de variables de entorno
 -   **tsx** - Ejecutor de TypeScript para desarrollo
+-   **Scalar** - Documentación interactiva de API con OpenAPI
 
 ## 📝 TypeScript
 
@@ -92,3 +95,13 @@ Para producción, primero compila el código:
 pnpm build
 pnpm start
 ```
+
+## 📚 Documentación de API
+
+La API cuenta con documentación interactiva usando Scalar:
+
+-   **Interfaz visual**: Visita `http://localhost:3000/docs` para explorar la API
+-   **Especificación OpenAPI**: Disponible en `http://localhost:3000/openapi.json`
+-   **Tema personalizado**: Configurado con el tema `purple` de Scalar
+
+La especificación OpenAPI se encuentra en [src/openapi.ts](src/openapi.ts) y se actualiza automáticamente cuando agregas nuevos endpoints.

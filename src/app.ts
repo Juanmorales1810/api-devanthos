@@ -44,7 +44,7 @@ app.get("/openapi.json", (_req: Request, res: Response) => {
 app.use(
     "/docs",
     apiReference({
-        theme: "purple",
+        theme: "kepler",
         spec: {
             content: openApiSpec,
         },

@@ -1,4 +1,5 @@
 import express, { Request, Response, Router } from "express";
+import budgetRoutes from "./budget.routes";
 
 const router: Router = express.Router();
 
@@ -7,7 +8,7 @@ const router: Router = express.Router();
 // import authRoutes from './auth.routes';
 
 // Ruta de bienvenida
-router.get("/", (req: Request, res: Response) => {
+router.get("/", (_req: Request, res: Response) => {
     res.json({
         success: true,
         message: "Bienvenido a la API de Devanthos",
@@ -16,6 +17,7 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 // Registrar rutas
+router.use("/budget", budgetRoutes);
 // router.use('/users', userRoutes);
 // router.use('/auth', authRoutes);
 
